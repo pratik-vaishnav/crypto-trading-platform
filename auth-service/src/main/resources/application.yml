@@ -17,10 +17,36 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    enabled: true
 
 jwt:
   secret: yourSecretKey12345678901234567890123456789012
   expiration: 86400000 # 24 hours
+
+security:
+  verification:
+    token:
+      expiration: 86400000 # 24 hours
+  password-reset:
+    token:
+      expiration: 1800000 # 30 minutes
+  api-key:
+    max-per-user: 5
+    default-expiration-days: 365
 
 logging:
   level:

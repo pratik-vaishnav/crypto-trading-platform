@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder
@@ -39,4 +41,31 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    private boolean emailVerified;
+    
+    private String verificationToken;
+    
+    private LocalDateTime verificationTokenExpiry;
+    
+    private String resetPasswordToken;
+    
+    private LocalDateTime resetPasswordTokenExpiry;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ApiKey> apiKeys;
+
+    private boolean enabled = true;
+    
+    private LocalDateTime lastLoginDate;
+    
+    private String lastLoginIp;
+    
+    @Column(length = 2000)
+    private String tradingPreferences;
+
+    @ElementCollection
+    @CollectionTable(name = "user_permissions")
+    @Enumerated(EnumType.STRING)
+    private Set<Permission> permissions;
 }
